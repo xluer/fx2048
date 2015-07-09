@@ -128,7 +128,7 @@ public class GameManager extends Group {
      * Redraws all tiles in the <code>gameGrid</code> object
      */
     private void redrawTilesInGameGrid() {
-        gameGrid.values().stream().filter(Objects::nonNull).forEach(t->board.addTile(t));
+        gameGrid.values().stream().filter(Objects::nonNull).forEach(board::addTile);
     }
 
     /**
@@ -260,17 +260,15 @@ public class GameManager extends Group {
     private int mergeMovementsAvailable() {
         final AtomicInteger pairsOfMergeableTiles = new AtomicInteger();
 
-        Stream.of(Direction.UP, Direction.LEFT).parallel().forEach(direction -> {
-            gridOperator.traverseGrid((x, y) -> {
-                Location thisloc = new Location(x, y);
-                optionalTile(thisloc).ifPresent(t->{
-                    if(t.isMergeable(optionalTile(thisloc.offset(direction)))){
-                        pairsOfMergeableTiles.incrementAndGet();
-                    }
-                });
-                return 0;
+        Stream.of(Direction.UP, Direction.LEFT).parallel().forEach(direction -> gridOperator.traverseGrid((x, y) -> {
+            Location thisloc = new Location(x, y);
+            optionalTile(thisloc).ifPresent(t->{
+                if(t.isMergeable(optionalTile(thisloc.offset(direction)))){
+                    pairsOfMergeableTiles.incrementAndGet();
+                }
             });
-        });
+            return 0;
+        }));
         return pairsOfMergeableTiles.get();
     }
 
@@ -289,14 +287,13 @@ public class GameManager extends Group {
         }
 
         Collections.shuffle(availableLocations);
-        Location randomLocation = availableLocations.get(new Random().nextInt(availableLocations.size()));
-        return randomLocation;
+        return availableLocations.get(new Random().nextInt(availableLocations.size()));
     }
 
     /**
      * Adds a tile of random value to a random location with a proper animation
      * 
-     * @param randomLocation 
+     * @param randomLocation Location
      */
     private void addAndAnimateRandomTile(Location randomLocation) {
         Tile tile = board.addRandomTile(randomLocation);
@@ -373,7 +370,7 @@ public class GameManager extends Group {
 
     /**
      * Move the tiles according user input if overlay is not on
-     * @param direction 
+     * @param direction Direction
      */
     public void move(Direction direction){
         if (!board.isLayerOn().get()) {
@@ -383,7 +380,7 @@ public class GameManager extends Group {
     
     /**
      * Set gameManager scale to adjust overall game size
-     * @param scale 
+     * @param scale scale
      */
     public void setScale(double scale) {
         this.setScaleX(scale);
@@ -392,7 +389,7 @@ public class GameManager extends Group {
 
     /**
      * Check if overlay covers the grid or not
-     * @return 
+     * @return BooleanProperty
      */
     public BooleanProperty isLayerOn() {
         return board.isLayerOn();

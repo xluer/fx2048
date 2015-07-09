@@ -13,7 +13,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 /**
  * @author bruno.borges@oracle.com
  */
@@ -27,7 +26,8 @@ public class Game2048 extends Application {
     public void init() {
         // Downloaded from https://01.org/clear-sans/blogs
         // The font may be used and redistributed under the terms of the Apache License, Version 2.0.
-        Font.loadFont(Game2048.class.getResource("ClearSans-Bold.ttf").toExternalForm(), 10.0);
+        Font.loadFont(Game2048.class.getResource("/ALGER.TTF").toExternalForm(), 10.0);
+        Font.loadFont(Game2048.class.getResource("/ClearSans-Bold.ttf").toExternalForm(), 10.0);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Game2048 extends Application {
         root.heightProperty().addListener(resize);
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("cc/fozone/fx2048/game.css");
+        scene.getStylesheets().add("game.css");
         addKeyHandler(scene);
         addSwipeHandlers(scene);
 
@@ -67,8 +67,8 @@ public class Game2048 extends Application {
         primaryStage.setScene(scene);
         primaryStage.setMinWidth(gameBounds.getWidth() / 2d);
         primaryStage.setMinHeight(gameBounds.getHeight() / 2d);
-        primaryStage.setWidth((gameBounds.getWidth() + MARGIN) * factor);
-        primaryStage.setHeight((gameBounds.getHeight() + MARGIN) * factor);
+        primaryStage.setWidth((gameBounds.getWidth() + MARGIN) * factor * 0.8);
+        primaryStage.setHeight((gameBounds.getHeight() + MARGIN) * factor * 0.8);
         primaryStage.show();
     }
 

@@ -315,7 +315,7 @@ public class Board extends Group {
                 getChildren().removeAll(overlay, buttonsOverlay);
                 // Keep the focus on the game when the layer is removed:
                 getParent().requestFocus();
-            } else if(b1){
+            } else {
                 // Set focus on the first button
                 buttonsOverlay.getChildren().get(0).requestFocus();
             }
